@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+dotenv.config({ path: 'backend/.env' });
 import cors from 'cors';
 import express from 'express';
 import connectDB from './db';
