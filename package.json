@@ -42,6 +42,7 @@
     "@types/mongoose": "^5.11.96",
     "axios": "^1.6.0",
     "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^4.21.2",
     "mongoose": "^9.6.1"
   }
