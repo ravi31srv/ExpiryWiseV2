@@ -60,6 +60,22 @@ app.post("/items", async (req, res) => {
     return res.status(500).json({ error: "Server error saving item" });
   }
 });
+app.delete("/items/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ error: "Item ID is required" });
+  }
+  try {
+    const deletedItem = await import_item.default.findByIdAndDelete(id);
+    if (!deletedItem) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+    return res.json({ success: true, message: "Item deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Server error deleting item" });
+  }
+});
 app.listen(port, host, () => {
   console.log(`[ ready ] http://${host}:${port}`);
 });

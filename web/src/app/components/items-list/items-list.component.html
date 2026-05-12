@@ -1,0 +1,63 @@
+<div class="items-container">
+  <div class="items-header">
+    <h1 class="page-title">Expiry Tracker</h1>
+    <p class="subtitle">Monitor your items' expiration dates</p>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading items...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <strong>Error:</strong> {{ errorMessage }}
+    <button (click)="loadItems()" class="retry-btn">Retry</button>
+  </div>
+
+  <div class="items-grid">
+    <div *ngIf="(items$ | async) as items">
+      <div *ngIf="items.length === 0" class="empty-state">
+        <div class="empty-icon">📦</div>
+        <h2>No items yet</h2>
+        <p>Add your first item to get started</p>
+      </div>
+
+      <div *ngFor="let item of items" class="item-card" [ngClass]="'status-' + getExpiryStatus(item.date)">
+        <div class="card-header">
+          <h3 class="item-name">{{ item.item }}</h3>
+          <div class="card-actions">
+            <span class="status-badge" [ngClass]="getExpiryStatus(item.date)">
+              {{ getStatusLabel(getExpiryStatus(item.date)) }}
+            </span>
+            <button 
+              class="delete-btn" 
+              (click)="deleteItem(item._id)"
+              [disabled]="deletingItemId === item._id"
+              title="Delete item"
+            >
+              <span *ngIf="deletingItemId !== item._id">🗑️</span>
+              <span *ngIf="deletingItemId === item._id" class="spinner-tiny"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="info-row">
+            <span class="label">Expiry Date:</span>
+            <span class="date">{{ item.date | date: 'MMM dd, yyyy' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Days Remaining:</span>
+            <span class="days" [ngClass]="{ 'days-warning': getDaysRemaining(item.date) < 0 }">
+              {{ getDaysRemaining(item.date) > 0 ? getDaysRemaining(item.date) + ' days' : 'Already expired' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="Math.min(100, Math.max(0, (getDaysRemaining(item.date) / 30) * 100))"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

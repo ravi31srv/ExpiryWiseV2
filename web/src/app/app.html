@@ -1,2 +1,15 @@
-<app-nx-welcome></app-nx-welcome>
-<router-outlet></router-outlet>
+<div class="app-container">
+  <nav class="app-navbar">
+    <div class="navbar-content">
+      <div class="navbar-logo">
+        <span class="logo-icon">📦</span>
+        <span class="logo-text">ExpiryWise</span>
+      </div>
+      <a href="/add" class="add-item-btn">+ Add Item</a>
+    </div>
+  </nav>
+
+  <div class="app-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
