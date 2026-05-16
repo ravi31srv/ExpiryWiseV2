@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from './services/auth.service';
 
 @Component({
   imports: [CommonModule, RouterModule],
@@ -9,5 +10,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.scss',
 })
 export class App {
-  protected title = 'ExpiryWise';
+  title = 'ExpiryWise';
+
+  constructor(public authService: AuthService) {}
+
+  onLogout(): void {
+    this.authService.logout();
+  }
 }

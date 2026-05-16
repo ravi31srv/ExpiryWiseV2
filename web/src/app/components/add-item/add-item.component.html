@@ -1,66 +1,61 @@
-<div class="add-item-container">
-  <div class="form-wrapper">
-    <div class="form-header">
-      <a href="/" class="back-btn">← Back</a>
-      <h1>Add New Item</h1>
-      <p class="subtitle">Track expiration dates and stay organized</p>
+<div class="fade-in">
+  <div class="auth-card" style="max-width: 500px; margin: 0 auto;">
+    <div class="auth-header">
+      <h2>Add New Item</h2>
+      <p>Keep track of your items and stay organized</p>
     </div>
 
-    <div *ngIf="successMessage" class="success-message">
+    <div *ngIf="successMessage" class="success-msg" style="margin-bottom: 1.5rem; text-align: center; color: var(--success);">
       ✓ {{ successMessage }}
     </div>
 
-    <div *ngIf="errorMessage" class="error-message">
-      ✗ {{ errorMessage }}
+    <div *ngIf="errorMessage" class="error-message" style="margin-bottom: 1.5rem; text-align: center;">
+      {{ errorMessage }}
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="item" class="form-label">Item Name</label>
-        <input
-          type="text"
-          id="item"
-          formControlName="item"
-          class="form-input"
-          placeholder="e.g., Milk, Bread, Medicine"
-          [class.error]="itemControl?.invalid && itemControl?.touched"
-        />
-        <div *ngIf="itemControl?.invalid && itemControl?.touched" class="error-text">
-          <span *ngIf="itemControl?.errors?.['required']">Item name is required</span>
-          <span *ngIf="itemControl?.errors?.['minlength']">Item name must be at least 2 characters</span>
-          <span *ngIf="itemControl?.errors?.['maxlength']">Item name cannot exceed 100 characters</span>
+        <label for="name">Item Name</label>
+        <div class="input-wrapper">
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            placeholder="e.g., Milk, Bread, Medicine"
+          />
+        </div>
+        <div *ngIf="nameControl?.invalid && nameControl?.touched" class="error-message">
+          <small *ngIf="nameControl?.errors?.['required']">Item name is required</small>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="date" class="form-label">Expiry Date</label>
-        <input
-          type="date"
-          id="date"
-          formControlName="date"
-          class="form-input"
-          [min]="getMinDate()"
-          [class.error]="dateControl?.invalid && dateControl?.touched"
-        />
-        <div *ngIf="dateControl?.invalid && dateControl?.touched" class="error-text">
-          <span *ngIf="dateControl?.errors?.['required']">Expiry date is required</span>
+        <label for="expiryDate">Expiry Date</label>
+        <div class="input-wrapper">
+          <input
+            type="date"
+            id="expiryDate"
+            formControlName="expiryDate"
+            [min]="getMinDate()"
+          />
+        </div>
+        <div *ngIf="expiryDateControl?.invalid && expiryDateControl?.touched" class="error-message">
+          <small *ngIf="expiryDateControl?.errors?.['required']">Expiry date is required</small>
         </div>
       </div>
 
-      <div class="form-actions">
+      <div style="display: flex; gap: 1rem; margin-top: 2rem;">
         <button
           type="submit"
           class="btn btn-primary"
           [disabled]="isSubmitting || form.invalid"
         >
-          <span *ngIf="!isSubmitting">Add Item</span>
-          <span *ngIf="isSubmitting">
-            <span class="spinner-small"></span> Adding...
-          </span>
+          {{ isSubmitting ? 'Adding...' : 'Add Item' }}
         </button>
         <button
           type="button"
-          class="btn btn-secondary"
+          class="btn btn-logout"
+          style="width: 100%;"
           (click)="onCancel()"
           [disabled]="isSubmitting"
         >
@@ -68,15 +63,5 @@
         </button>
       </div>
     </form>
-
-    <div class="info-box">
-      <h3>💡 Tips:</h3>
-      <ul>
-        <li>Use clear item names so you can easily identify them</li>
-        <li>Set the expiry date based on the product's shelf life</li>
-        <li>Items expiring within 7 days will be highlighted as "Expiring Soon"</li>
-        <li>Keep your list updated to avoid expired items</li>
-      </ul>
-    </div>
   </div>
 </div>

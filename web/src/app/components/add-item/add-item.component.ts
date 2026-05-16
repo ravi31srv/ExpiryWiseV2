@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ItemsService, Item } from '../../services/items.service';
+import { ItemsService } from '../../services/items.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,17 +29,17 @@ export class AddItemComponent implements OnInit {
 
   initializeForm(): void {
     this.form = this.fb.group({
-      item: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      date: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      expiryDate: ['', Validators.required],
     });
   }
 
-  get itemControl() {
-    return this.form.get('item');
+  get nameControl() {
+    return this.form.get('name');
   }
 
-  get dateControl() {
-    return this.form.get('date');
+  get expiryDateControl() {
+    return this.form.get('expiryDate');
   }
 
   onSubmit(): void {
@@ -52,15 +52,15 @@ export class AddItemComponent implements OnInit {
     this.errorMessage = null;
     this.successMessage = null;
 
-    const itemData: Item = {
-      item: this.form.value.item.trim(),
-      date: this.form.value.date,
+    const itemData: any = {
+      name: this.form.value.name.trim(),
+      expiryDate: this.form.value.expiryDate,
     };
 
     this.itemsService.addItem(itemData).subscribe({
       next: (response) => {
         this.isSubmitting = false;
-        this.successMessage = `"${itemData.item}" added successfully!`;
+        this.successMessage = `"${itemData.name}" added successfully!`;
         this.form.reset();
         setTimeout(() => {
           this.router.navigate(['/']);
@@ -68,7 +68,7 @@ export class AddItemComponent implements OnInit {
       },
       error: (error) => {
         this.isSubmitting = false;
-        this.errorMessage = error.error?.error || 'Failed to add item. Please try again.';
+        this.errorMessage = error.error?.message || 'Failed to add item. Please try again.';
         console.error('Error adding item:', error);
       },
     });

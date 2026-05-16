@@ -1,15 +1,20 @@
 import mongoose from 'mongoose';
 
 const itemSchema = new mongoose.Schema({
-  item: {
+  name: {
     type: String,
     required: true,
   },
-  date: {
-    type: String,
+  expiryDate: {
+    type: Date,
     required: true,
   },
-});
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+}, { timestamps: true });
 
 const Item = mongoose.model('Item', itemSchema);
 
