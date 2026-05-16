@@ -10,9 +10,7 @@ import { ItemsService } from '../../services/items.service';
   styleUrl: './items-list.component.scss',
 })
 export class ItemsListComponent implements OnInit {
-  isLoading = false;
   errorMessage: string | null = null;
-  Math = Math;
   deletingItemId: string | null = null;
 
   constructor(public itemsService: ItemsService) {}
@@ -21,41 +19,23 @@ export class ItemsListComponent implements OnInit {
     return this.itemsService.items$;
   }
 
+  get isLoading$() {
+    return this.itemsService.isLoading$;
+  }
+
   ngOnInit(): void {
     this.loadItems();
   }
 
   loadItems(): void {
-    this.isLoading = true;
-
     this.errorMessage = null;
     this.itemsService.loadItems();
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 500);
   }
-
-//   loadItems(): void {
-//   this.isLoading = true;
-
-//   this.itemsService.getItems().subscribe({
-//     next: (data: any) => {
-//       this.items = data;
-//     },
-
-//     error: (error: any) => {
-//       this.errorMessage = 'Failed to load items';
-//     },
-
-//     complete: () => {
-//       this.isLoading = false;
-//     }
-//   });
-// }
 
   getExpiryStatus(date: string): 'expired' | 'expiring-soon' | 'safe' {
     const itemDate = new Date(date);
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const daysUntilExpiry = Math.ceil(
       (itemDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
     );
@@ -72,6 +52,7 @@ export class ItemsListComponent implements OnInit {
   getDaysRemaining(date: string): number {
     const itemDate = new Date(date);
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     return Math.ceil(
       (itemDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
     );
@@ -103,18 +84,6 @@ export class ItemsListComponent implements OnInit {
         this.errorMessage = 'Failed to delete item. Please try again.';
         console.error('Error deleting item:', error);
       },
-    });
-  }
-
-  addItemToList(newItem: any): void {
-    this.itemsService.addItem(newItem).subscribe(() => {
-      const itemElement = document.querySelector(`.item-card[data-id="${newItem.id}"]`);
-      if (itemElement) {
-        itemElement.classList.add('added');
-        setTimeout(() => {
-          itemElement.classList.remove('added');
-        }, 800); // Match animation duration
-      }
     });
   }
 }

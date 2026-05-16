@@ -33,15 +33,20 @@ __export(item_exports, {
 module.exports = __toCommonJS(item_exports);
 var import_mongoose = __toESM(require("mongoose"));
 const itemSchema = new import_mongoose.default.Schema({
-  item: {
+  name: {
     type: String,
     required: true
   },
-  date: {
-    type: String,
+  expiryDate: {
+    type: Date,
+    required: true
+  },
+  user: {
+    type: import_mongoose.default.Schema.Types.ObjectId,
+    ref: "User",
     required: true
   }
-});
+}, { timestamps: true });
 const Item = import_mongoose.default.model("Item", itemSchema);
 var item_default = Item;
 //# sourceMappingURL=item.js.map
