@@ -9,6 +9,9 @@
       </div>
       
       <div class="navbar-actions">
+        <button (click)="toggleTheme()" class="btn-icon" [title]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+          {{ isDarkMode ? '☀️' : '🌙' }}
+        </button>
         <a routerLink="/add" class="btn-add">
           <span class="icon">+</span>
           <span>New Item</span>

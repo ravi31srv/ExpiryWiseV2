@@ -5,12 +5,12 @@
       <p>Keep track of your items and stay organized</p>
     </div>
 
-    <div *ngIf="successMessage" class="success-msg" style="margin-bottom: 1.5rem; text-align: center; color: var(--success);">
+    <div *ngIf="successMessage" class="toast toast-success" style="bottom: 2rem; right: 2rem; position: fixed;">
       ✓ {{ successMessage }}
     </div>
 
-    <div *ngIf="errorMessage" class="error-message" style="margin-bottom: 1.5rem; text-align: center;">
-      {{ errorMessage }}
+    <div *ngIf="errorMessage" class="toast toast-error" style="bottom: auto; top: 5rem; right: 2rem;">
+      <strong>Error:</strong> {{ errorMessage }}
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">

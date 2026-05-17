@@ -10,6 +10,12 @@ import { CommonModule } from '@angular/common';
     <div class="auth-container">
       <div class="auth-card">
         <div class="auth-header">
+          <div class="brand-logo-container">
+            <div class="logo-wrapper">
+              <span>📦</span>
+            </div>
+            <span class="brand-name">ExpiryWise</span>
+          </div>
           <h2>Welcome Back</h2>
           <p>Log in to manage your expiry dates</p>
         </div>

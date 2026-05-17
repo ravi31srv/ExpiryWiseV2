@@ -11,9 +11,14 @@ import { ItemsService } from '../../services/items.service';
 })
 export class ItemsListComponent implements OnInit {
   errorMessage: string | null = null;
+  toastMessage: string | null = null;
   deletingItemId: string | null = null;
 
   constructor(public itemsService: ItemsService) {}
+
+  trackByFn(index: number, item: any): string {
+    return item._id;
+  }
 
   get items$() {
     return this.itemsService.items$;
@@ -75,15 +80,20 @@ export class ItemsListComponent implements OnInit {
     }
 
     this.deletingItemId = itemId;
-    this.itemsService.deleteItem(itemId).subscribe({
-      next: () => {
-        this.deletingItemId = null;
-      },
-      error: (error) => {
-        this.deletingItemId = null;
-        this.errorMessage = 'Failed to delete item. Please try again.';
-        console.error('Error deleting item:', error);
-      },
-    });
+    // Animate first
+    setTimeout(() => {
+      this.itemsService.deleteItem(itemId).subscribe({
+        next: () => {
+          this.deletingItemId = null;
+          this.toastMessage = 'Item deleted successfully';
+          setTimeout(() => this.toastMessage = null, 3000);
+        },
+        error: (error) => {
+          this.deletingItemId = null;
+          this.errorMessage = 'Failed to delete item. Please try again.';
+          console.error('Error deleting item:', error);
+        },
+      });
+    }, 300); // Wait for shrink/fade out animation
   }
 }

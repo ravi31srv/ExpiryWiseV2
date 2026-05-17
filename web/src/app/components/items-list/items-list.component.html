@@ -11,9 +11,13 @@
     <p>Retrieving your items...</p>
   </div>
 
-  <div *ngIf="errorMessage" class="error-message">
+  <div *ngIf="errorMessage" class="toast toast-error" style="bottom: auto; top: 5rem; right: 2rem;">
     <strong>Error:</strong> {{ errorMessage }}
-    <button (click)="loadItems()" class="btn btn-link">Retry</button>
+    <button (click)="loadItems()" class="btn-link" style="margin-left: auto;">Retry</button>
+  </div>
+
+  <div *ngIf="toastMessage" class="toast toast-success" style="bottom: 2rem; right: 2rem; position: fixed;">
+    ✓ {{ toastMessage }}
   </div>
 
   <div class="items-grid" *ngIf="!(isLoading$ | async)">
@@ -24,10 +28,14 @@
         <p>Your inventory is empty. Click "New Item" to start tracking.</p>
       </div>
 
-      <article *ngFor="let item of items" class="item-card" [ngClass]="'status-' + getExpiryStatus(item.expiryDate)">
+      <article *ngFor="let item of items; trackBy: trackByFn" class="item-card fade-in" [ngClass]="'status-' + getExpiryStatus(item.expiryDate)" [class.removing]="deletingItemId === item._id">
         <div class="card-header">
           <h3 class="item-name">{{ item.name }}</h3>
-          <span class="status-badge" [ngClass]="getExpiryStatus(item.expiryDate)">
+          <span class="status-badge" [ngClass]="{
+              'expired': getExpiryStatus(item.expiryDate) === 'expired',
+              'status-alert-animation': getExpiryStatus(item.expiryDate) === 'expiring-soon',
+              'safe': getExpiryStatus(item.expiryDate) === 'safe'
+            }">
             {{ getStatusLabel(getExpiryStatus(item.expiryDate)) }}
           </span>
         </div>

@@ -7,38 +7,48 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-forgot-password',
   template: `
-    <div class="auth-page">
-      <div class="glass-card">
-        <h2>Reset Password</h2>
-        <p class="subtitle">Enter your email to receive a reset token</p>
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="brand-logo-container">
+            <div class="logo-wrapper">
+              <span>📦</span>
+            </div>
+            <span class="brand-name">ExpiryWise</span>
+          </div>
+          <h2>Reset Password</h2>
+          <p>Enter your email to receive a reset token</p>
+        </div>
         
-        <div *ngIf="errorMessage" class="error-msg">
+        <div *ngIf="errorMessage" class="error-message" style="margin-bottom: 1.5rem; text-align: center;">
           {{ errorMessage }}
         </div>
 
-        <div *ngIf="successMessage" class="success-msg">
+        <div *ngIf="successMessage" class="toast toast-success">
           {{ successMessage }}
         </div>
 
         <form *ngIf="!successMessage" (submit)="onSubmit()">
           <div class="form-group">
             <label for="email">Email Address</label>
-            <input 
-              type="email" 
-              id="email" 
-              [(ngModel)]="email" 
-              name="email" 
-              placeholder="name@example.com"
-              required 
-            />
+            <div class="input-wrapper">
+              <input 
+                type="email" 
+                id="email" 
+                [(ngModel)]="email" 
+                name="email" 
+                placeholder="name@example.com"
+                required 
+              />
+            </div>
           </div>
 
-          <button type="submit" class="btn-primary" [disabled]="loading">
+          <button type="submit" class="btn btn-primary" [disabled]="loading" style="margin-top: 1rem;">
             {{ loading ? 'Sending...' : 'Send Reset Token' }}
           </button>
         </form>
 
-        <div class="auth-links">
+        <div class="auth-footer">
           Remember your password? <a routerLink="/login">Sign in</a>
         </div>
       </div>
