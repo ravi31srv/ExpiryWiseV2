@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/db.ts"],
-  "sourcesContent": ["import mongoose from 'mongoose';\n\nconst connectDB = async () => {\n  try {\n    const uri = process.env.MONGO_URI || 'mongodb://ravi31study_db_user:Ravi31srv%40@ac-txjv2yx-shard-00-00.djkfmsd.mongodb.net:27017,ac-txjv2yx-shard-00-01.djkfmsd.mongodb.net:27017,ac-txjv2yx-shard-00-02.djkfmsd.mongodb.net:27017/expirywise?ssl=true&replicaSet=atlas-12b7dv-shard-0&authSource=admin&appName=expirywise-app-cluster';\n    const conn = await mongoose.connect(uri);\n    console.log(`MongoDB Connected: ${conn.connection.host}`);\n  } catch (error) {\n    console.error(`Error connecting to MongoDB: ${(error as Error).message}`);\n    process.exit(1);\n  }\n};\n\nexport default connectDB;\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,sBAAqB;AAErB,MAAM,YAAY,YAAY;AAC5B,MAAI;AACF,UAAM,MAAM,QAAQ,IAAI,aAAa;AACrC,UAAM,OAAO,MAAM,gBAAAA,QAAS,QAAQ,GAAG;AACvC,YAAQ,IAAI,sBAAsB,KAAK,WAAW,IAAI,EAAE;AAAA,EAC1D,SAAS,OAAO;AACd,YAAQ,MAAM,gCAAiC,MAAgB,OAAO,EAAE;AACxE,YAAQ,KAAK,CAAC;AAAA,EAChB;AACF;AAEA,IAAO,aAAQ;",
-  "names": ["mongoose"]
-}

@@ -53,4 +53,3 @@ userSchema.pre("save", async function() {
 });
 const User = import_mongoose.default.model("User", userSchema);
 var user_default = User;
-//# sourceMappingURL=user.js.map
