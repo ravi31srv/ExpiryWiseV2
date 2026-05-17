@@ -108,4 +108,3 @@ router.post("/reset-password", async (req, res) => {
   }
 });
 var auth_default = router;
-//# sourceMappingURL=auth.js.map

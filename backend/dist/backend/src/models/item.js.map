@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../src/models/item.ts"],
-  "sourcesContent": ["import mongoose from 'mongoose';\r\n\r\nconst itemSchema = new mongoose.Schema({\r\n  name: {\r\n    type: String,\r\n    required: true,\r\n  },\r\n  expiryDate: {\r\n    type: Date,\r\n    required: true,\r\n  },\r\n  user: {\r\n    type: mongoose.Schema.Types.ObjectId,\r\n    ref: 'User',\r\n    required: true,\r\n  },\r\n}, { timestamps: true });\r\n\r\nconst Item = mongoose.model('Item', itemSchema);\r\n\r\nexport default Item;\r\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,sBAAqB;AAErB,MAAM,aAAa,IAAI,gBAAAA,QAAS,OAAO;AAAA,EACrC,MAAM;AAAA,IACJ,MAAM;AAAA,IACN,UAAU;AAAA,EACZ;AAAA,EACA,YAAY;AAAA,IACV,MAAM;AAAA,IACN,UAAU;AAAA,EACZ;AAAA,EACA,MAAM;AAAA,IACJ,MAAM,gBAAAA,QAAS,OAAO,MAAM;AAAA,IAC5B,KAAK;AAAA,IACL,UAAU;AAAA,EACZ;AACF,GAAG,EAAE,YAAY,KAAK,CAAC;AAEvB,MAAM,OAAO,gBAAAA,QAAS,MAAM,QAAQ,UAAU;AAE9C,IAAO,eAAQ;",
-  "names": ["mongoose"]
-}

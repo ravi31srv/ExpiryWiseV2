@@ -36,4 +36,3 @@ app.use("/api/auth", import_auth.default);
 app.use("/api/items", import_items.default);
 const PORT = process.env.PORT || 5e3;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-//# sourceMappingURL=main.js.map

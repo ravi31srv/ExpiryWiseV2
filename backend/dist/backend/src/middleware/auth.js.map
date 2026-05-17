@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../src/middleware/auth.ts"],
-  "sourcesContent": ["import jwt from 'jsonwebtoken';\nimport { Request, Response, NextFunction } from 'express';\n\ninterface JwtPayload {\n  id: string;\n}\n\nconst authMiddleware = (req: Request, res: Response, next: NextFunction) => {\n  const token = req.headers.authorization?.split(' ')[1];\n  \n  if (!token) {\n    res.status(401).json({ message: 'Authorization token missing' });\n    return;\n  }\n\n  try {\n    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as JwtPayload;\n    req.user = decoded;\n    next();\n  } catch (error) {\n    res.status(403).json({ message: 'Invalid or expired token' });\n  }\n};\n\nexport default authMiddleware;"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,0BAAgB;AAOhB,MAAM,iBAAiB,CAAC,KAAc,KAAe,SAAuB;AAC1E,QAAM,QAAQ,IAAI,QAAQ,eAAe,MAAM,GAAG,EAAE,CAAC;AAErD,MAAI,CAAC,OAAO;AACV,QAAI,OAAO,GAAG,EAAE,KAAK,EAAE,SAAS,8BAA8B,CAAC;AAC/D;AAAA,EACF;AAEA,MAAI;AACF,UAAM,UAAU,oBAAAA,QAAI,OAAO,OAAO,QAAQ,IAAI,cAAc,QAAQ;AACpE,QAAI,OAAO;AACX,SAAK;AAAA,EACP,SAAS,OAAO;AACd,QAAI,OAAO,GAAG,EAAE,KAAK,EAAE,SAAS,2BAA2B,CAAC;AAAA,EAC9D;AACF;AAEA,IAAO,eAAQ;",
-  "names": ["jwt"]
-}
