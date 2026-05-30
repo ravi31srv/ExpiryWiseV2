@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/models/user.ts"],
+  "sourcesContent": ["import mongoose from 'mongoose';\r\nimport bcrypt from 'bcrypt';\r\n\r\nconst userSchema = new mongoose.Schema({\r\n  email: {\r\n    type: String,\r\n    required: true,\r\n    unique: true,\r\n    lowercase: true,\r\n    trim: true,\r\n  },\r\n  password: {\r\n    type: String,\r\n    required: true,\r\n  },\r\n}, { timestamps: true });\r\n\r\n// Hash password before saving\r\nuserSchema.pre('save', async function () {\r\n  if (!this.isModified('password')) return;\r\n  const salt = await bcrypt.genSalt(10);\r\n  this.password = await bcrypt.hash(this.password, salt);\r\n});\r\n\r\nconst User = mongoose.model('User', userSchema);\r\nexport default User;"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,sBAAqB;AACrB,oBAAmB;AAEnB,MAAM,aAAa,IAAI,gBAAAA,QAAS,OAAO;AAAA,EACrC,OAAO;AAAA,IACL,MAAM;AAAA,IACN,UAAU;AAAA,IACV,QAAQ;AAAA,IACR,WAAW;AAAA,IACX,MAAM;AAAA,EACR;AAAA,EACA,UAAU;AAAA,IACR,MAAM;AAAA,IACN,UAAU;AAAA,EACZ;AACF,GAAG,EAAE,YAAY,KAAK,CAAC;AAGvB,WAAW,IAAI,QAAQ,iBAAkB;AACvC,MAAI,CAAC,KAAK,WAAW,UAAU,EAAG;AAClC,QAAM,OAAO,MAAM,cAAAC,QAAO,QAAQ,EAAE;AACpC,OAAK,WAAW,MAAM,cAAAA,QAAO,KAAK,KAAK,UAAU,IAAI;AACvD,CAAC;AAED,MAAM,OAAO,gBAAAD,QAAS,MAAM,QAAQ,UAAU;AAC9C,IAAO,eAAQ;",
+  "names": ["mongoose", "bcrypt"]
+}

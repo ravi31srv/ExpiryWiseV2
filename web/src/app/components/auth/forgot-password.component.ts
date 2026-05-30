@@ -74,9 +74,8 @@ export class ForgotPasswordComponent {
     this.authService.forgotPassword(this.email).subscribe({
       next: (res) => {
         this.loading = false;
-        this.successMessage = 'A reset token has been generated. In this demo, you can find it in the API response.';
+        this.successMessage = 'A password reset email has been sent to your registered email address! Please check your inbox. (For convenience in local testing, the token is also logged to the console)';
         console.log('Reset Token:', res.resetToken);
-        // In a real app, we might redirect to reset-password with the token or tell them to check email
       },
       error: (err) => {
         this.loading = false;
