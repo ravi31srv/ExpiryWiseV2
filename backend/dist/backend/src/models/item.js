@@ -49,3 +49,4 @@ const itemSchema = new import_mongoose.default.Schema({
 }, { timestamps: true });
 const Item = import_mongoose.default.model("Item", itemSchema);
 var item_default = Item;
+//# sourceMappingURL=item.js.map

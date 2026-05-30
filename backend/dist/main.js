@@ -42,3 +42,4 @@ function isFile(s) {
   }
 }
 module.exports = require("./backend/src/main.js");
+//# sourceMappingURL=main.js.map

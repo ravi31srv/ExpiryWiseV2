@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/main.ts"],
+  "sourcesContent": ["import express from 'express';\nimport dotenv from 'dotenv';\nimport cors from 'cors';\nimport connectDB from './db';\nimport authRoutes from './routes/auth';\nimport itemRoutes from './routes/items';\n\ndotenv.config();\n\nconst app = express();\n\n// Connect to Database\nconnectDB();\n\n// Middleware\napp.use(cors());\napp.use(express.json());\napp.use((req, res, next) => {\n console.log(`Request hit on  : ${req.method} ${req.path}`);\n  next();\n});\n\n// Routes\napp.use('/api/auth', authRoutes);\napp.use('/api/items', itemRoutes);\n\nconst PORT = process.env.PORT || 5000;\napp.listen(PORT, () => console.log(`Server running on port ${PORT}`));"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;AAAA,qBAAoB;AACpB,oBAAmB;AACnB,kBAAiB;AACjB,gBAAsB;AACtB,kBAAuB;AACvB,mBAAuB;AAEvB,cAAAA,QAAO,OAAO;AAEd,MAAM,UAAM,eAAAC,SAAQ;AAAA,IAGpB,UAAAC,SAAU;AAGV,IAAI,QAAI,YAAAC,SAAK,CAAC;AACd,IAAI,IAAI,eAAAF,QAAQ,KAAK,CAAC;AACtB,IAAI,IAAI,CAAC,KAAK,KAAK,SAAS;AAC3B,UAAQ,IAAI,qBAAqB,IAAI,MAAM,IAAI,IAAI,IAAI,EAAE;AACxD,OAAK;AACP,CAAC;AAGD,IAAI,IAAI,aAAa,YAAAG,OAAU;AAC/B,IAAI,IAAI,cAAc,aAAAC,OAAU;AAEhC,MAAM,OAAO,QAAQ,IAAI,QAAQ;AACjC,IAAI,OAAO,MAAM,MAAM,QAAQ,IAAI,0BAA0B,IAAI,EAAE,CAAC;",
+  "names": ["dotenv", "express", "connectDB", "cors", "authRoutes", "itemRoutes"]
+}

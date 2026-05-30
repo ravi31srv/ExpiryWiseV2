@@ -2,6 +2,7 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import User from '../models/user';
+import { sendPasswordResetEmail } from '../utils/mailer';
 
 const router = express.Router();
 
@@ -62,15 +63,22 @@ router.post('/forgot-password', async (req, res) => {
   const { email } = req.body;
   try {
     const user = await User.findOne({ email });
+    console.log({ user });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // In a production app, we would send an email. 
-    // Here we return a temporary token as requested for simplicity but keeping it secure.
     const resetToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'secret', { expiresIn: '15m' });
-    return res.status(200).json({ resetToken, message: 'Reset token generated (Check console/response)' });
+  
+    // Send password reset email
+    await sendPasswordResetEmail(user.email, resetToken);
+
+    return res.status(200).json({ 
+      resetToken, 
+      message: 'Password reset link and token have been sent to your email.' 
+    });
   } catch (error) {
+    console.error('Forgot password error:', error);
     return res.status(500).json({ message: 'Server error' });
   }
 });
@@ -85,6 +93,7 @@ router.post('/reset-password', async (req, res) => {
 
   try {
     const decoded = jwt.verify(resetToken, process.env.JWT_SECRET || 'secret') as { id: string };
+ console.log({decoded});
     const user = await User.findById(decoded.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });

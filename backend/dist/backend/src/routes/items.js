@@ -76,3 +76,4 @@ router.delete("/:id", async (req, res) => {
   }
 });
 var items_default = router;
+//# sourceMappingURL=items.js.map

@@ -32,7 +32,12 @@ const app = (0, import_express.default)();
 (0, import_db.default)();
 app.use((0, import_cors.default)());
 app.use(import_express.default.json());
+app.use((req, res, next) => {
+  console.log(`Request hit on  : ${req.method} ${req.path}`);
+  next();
+});
 app.use("/api/auth", import_auth.default);
 app.use("/api/items", import_items.default);
 const PORT = process.env.PORT || 5e3;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+//# sourceMappingURL=main.js.map

@@ -35,6 +35,7 @@ var import_express = __toESM(require("express"));
 var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
 var import_bcrypt = __toESM(require("bcrypt"));
 var import_user = __toESM(require("../models/user"));
+var import_mailer = require("../utils/mailer");
 const router = import_express.default.Router();
 router.post("/signup", async (req, res) => {
   const { email, password } = req.body;
@@ -80,12 +81,18 @@ router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
   try {
     const user = await import_user.default.findOne({ email });
+    console.log({ user });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
     const resetToken = import_jsonwebtoken.default.sign({ id: user._id }, process.env.JWT_SECRET || "secret", { expiresIn: "15m" });
-    return res.status(200).json({ resetToken, message: "Reset token generated (Check console/response)" });
+    await (0, import_mailer.sendPasswordResetEmail)(user.email, resetToken);
+    return res.status(200).json({
+      resetToken,
+      message: "Password reset link and token have been sent to your email."
+    });
   } catch (error) {
+    console.error("Forgot password error:", error);
     return res.status(500).json({ message: "Server error" });
   }
 });
@@ -96,6 +103,7 @@ router.post("/reset-password", async (req, res) => {
   }
   try {
     const decoded = import_jsonwebtoken.default.verify(resetToken, process.env.JWT_SECRET || "secret");
+    console.log({ decoded });
     const user = await import_user.default.findById(decoded.id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -108,3 +116,4 @@ router.post("/reset-password", async (req, res) => {
   }
 });
 var auth_default = router;
+//# sourceMappingURL=auth.js.map
